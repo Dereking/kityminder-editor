@@ -62,6 +62,25 @@ angular.module('kityminderEditor')
                         aLink.download = $('#node_text1').text()+'.'+type;
                         aLink.href = URL.createObjectURL(blob);
                         aLink.dispatchEvent(evt);
+
+ 
+    
+                        var savefilemodal = $modal.open({
+                            animation: true,
+                            templateUrl: 'ui/dialog/savefile/savefile.tpl.html',
+                            controller: 'savefile.ctrl',
+                            size: 'md',
+                            resolve: {
+                                data: function() {
+                                    return content;
+                                }
+                            }
+                        });
+
+                        savefilemodal.result.then(function(result) {
+                            // minder.execCommand('HyperLink', result.url, result.title || '');
+                            console.log("openfilemodal res=",result.url) 
+                        });
                     });
                 }
             }
