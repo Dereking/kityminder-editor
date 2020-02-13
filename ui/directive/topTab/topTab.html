@@ -1,4 +1,8 @@
 <tabset>
+    
+    <tab heading="{{ 'file' | lang: 'ui/tabs'; }}" ng-click="toggleTopTab('file')" select="setCurTab('file')">
+        <fileopt minder="minder"></fileopt> 
+    </tab>
     <tab heading="{{ 'idea' | lang: 'ui/tabs'; }}" ng-click="toggleTopTab('idea')" select="setCurTab('idea')">
         <undo-redo editor="editor"></undo-redo>
         <append-node minder="minder"></append-node>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>KityMinder Editor - Powered By FEX</title>
+    <title>格力脑图</title>
 
 	<link href="favicon.ico" type="image/x-icon" rel="shortcut icon">
 
@@ -37,7 +37,7 @@
     </style>
 </head>
 <body ng-app="kityminderDemo" ng-controller="MainController">
-    <h1 class="editor-title">KityMinder Editor - Powered By FEX</h1>
+    <h1 class="editor-title">格力脑图</h1>
     <kityminder-editor on-init="initEditor(editor, minder)"></kityminder-editor>
 </body>
 
@@ -75,10 +75,15 @@
 <script src="ui/service/revokeDialog.service.js"></script>
 <script src="ui/service/server.service.js"></script>
 <script src="ui/filter/lang.filter.js"></script>
+
 <script src="ui/dialog/hyperlink/hyperlink.ctrl.js"></script>
+<script src="ui/dialog/openfile/openfile.ctrl.js"></script>
+
 <script src="ui/dialog/image/image.ctrl.js"></script>
 <script src="ui/dialog/imExportNode/imExportNode.ctrl.js"></script>
 <script src="ui/directive/topTab/topTab.directive.js"></script>
+
+<script src="ui/directive/fileopt/fileopt.directive.js"></script>
 <script src="ui/directive/undoRedo/undoRedo.directive.js"></script>
 <script src="ui/directive/appendNode/appendNode.directive.js"></script>
 <script src="ui/directive/arrange/arrange.directive.js"></script>

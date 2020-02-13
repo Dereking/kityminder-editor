@@ -158,6 +158,10 @@ angular.module('kityminderEditor')
 					'move_success': '{0} 移动成功到 {1}',
 
 					'command': {
+						'new':'新建',
+						'save':'保存',
+						"import":'导入',
+						"export":'导出',
 						'appendsiblingnode': '插入同级主题',
                         'appendparentnode': '插入上级主题',
 						'appendchildnode': '插入下级主题',
@@ -187,6 +191,7 @@ angular.module('kityminderEditor')
 					'redo': '重做 (Ctrl + Y)',
 
 					'tabs': {
+						'file':'文件',
 						'idea': '思路',
 						'appearence': '外观',
 						'view': '视图'
