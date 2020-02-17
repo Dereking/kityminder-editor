@@ -10,13 +10,25 @@ angular.module('kityminderEditor')
             link: function($scope) {
                 var minder = $scope.minder;
 
+                $scope.saveModalData = {
+                    filetype : "km",
+                    fileName : "unamed",
+                }
+
                 //commandBinder.bind(minder, 'new', $scope)
                 $scope.newFile = newFile;
+                $scope.openFile = openFile;
                 $scope.importFile = importFile;
+                $scope.saveFile = saveFile;
+                $scope.saveAsFile = saveAsFile;
                 $scope.exportFile = exportFile;
  
                 function newFile(){
                     alert("d")
+                }
+
+                function openFile() { 
+
                 }
 
                 function importFile() { 
@@ -41,45 +53,67 @@ angular.module('kityminderEditor')
                      });
  
                 }
+
+                function saveFile(){
+                    alert("save") 
+                }
+                function saveAsFile() {
+                }
+
                 function exportFile() {
-                    var exportType = "json";
-                    minder.exportData(exportType).then(function(content){
-                        switch(exportType){
-                            case 'json':
-                                console.log("content json:");
-                                console.log(content);
-                                console.log($.parseJSON(content));
-                                break;
-                            default:
-                                console.log(content);
-                                break;
-                        }
-                        var aLink = document.createElement('a'),
-                                evt = document.createEvent("HTMLEvents"),
-                                blob = new Blob([content]);
-                
-                        evt.initEvent("click", false, false);
-                        aLink.download = $('#node_text1').text()+'.'+type;
-                        aLink.href = URL.createObjectURL(blob);
-                        aLink.dispatchEvent(evt);
-
- 
-    
-                        var savefilemodal = $modal.open({
-                            animation: true,
-                            templateUrl: 'ui/dialog/savefile/savefile.tpl.html',
-                            controller: 'savefile.ctrl',
-                            size: 'md',
-                            resolve: {
-                                data: function() {
-                                    return content;
-                                }
+                    var savefilemodal = $modal.open({
+                        animation: true,
+                        templateUrl: 'ui/dialog/savefile/savefile.tpl.html',
+                        controller: 'savefile.ctrl',
+                        size: 'md',
+                        resolve: {
+                            data: function() {
+                                return $scope.saveModalData
                             }
-                        });
+                        }
+                    });
 
-                        savefilemodal.result.then(function(result) {
-                            // minder.execCommand('HyperLink', result.url, result.title || '');
-                            console.log("openfilemodal res=",result.url) 
+                    savefilemodal.result.then(function(result) { 
+                            var exportType = result.filetype || "json";
+                            console.log(exportType, result);
+                            minder.exportData(exportType).then(function(content){ 
+                                switch(exportType){
+                                    case 'json':
+                                        console.log("content json:");
+                                        console.log(content);
+                                        console.log($.parseJSON(content));
+                                        break;
+                                    default:
+                                        console.log("content default:");
+                                        console.log(content);
+                                        break;
+                                }
+
+        
+                                // blobOptions = {
+                                //     type: 'text/csv',
+                                //     endings: 'native' // or transparent
+                                // };
+                                var blobOptions =  {};
+                        
+                                var blob = new Blob([content], blobOptions);
+                                var a = document.createElement('a');
+                                a.innerHTML = result.fileName + "."+  result.filetype;
+                        
+                                // 指定生成的文件名
+                                a.download = result.fileName + "."+  result.filetype;
+                                a.href = URL.createObjectURL(blob);
+                        
+                                document.body.appendChild(a);
+                        
+                                var evt = document.createEvent("MouseEvents");
+                                evt.initEvent("click", false, false);
+                        
+                                a.dispatchEvent(evt);
+                        
+                                document.body.removeChild(a); 
+                            
+                            console.log("savefilemodal res=",result.filetype) 
                         });
                     });
                 }

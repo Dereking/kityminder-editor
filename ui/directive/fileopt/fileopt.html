@@ -1,23 +1,23 @@
-<div class="km-btn-group file-group"> 
-    <button type="button"
-            class="btn btn-default filenew-caption dropdown-toggle"
-            ng-click="newFile()"
-            title="{{ 'new' | lang:'ui/command' }}">
-        <span class="caption">{{ 'new' | lang:'ui/command' }}</span>
-        <span class="sr-only">{{ 'new' | lang:'ui/command' }}</span>
-    </button>
-    <button type="button"
-                class="btn btn-default filenew-caption "
-                ng-click="importFile()"
-                title="{{ 'import' | lang:'ui/command' }}">
-            <span class="caption">{{ 'import' | lang:'ui/command' }}</span>
-            <span class="sr-only">{{ 'import' | lang:'ui/command' }}</span>
-    </button> 
-    <button type="button"
-            class="btn btn-default filenew-caption "
-            ng-click="exportFile()"
-            title="{{ 'export' | lang:'ui/command' }}">
-        <span class="caption">{{ 'export' | lang:'ui/command' }}</span>
-        <span class="sr-only">{{ 'export' | lang:'ui/command' }}</span>
-    </button>
+
+<div class="readjust-layout">
+    <a ng-click="newFile()" class="btn-wrap" >
+        <span class="btn-icon glyphicon-floppy-disk"></span>
+        <span class="btn-label">{{ 'newFile' | lang: 'ui/command' }}</span>
+    </a>
+    <a ng-click="openFile()" class="btn-wrap" >
+        <span class="btn-icon glyphicon-floppy-disk"></span>
+        <span class="btn-label">{{ 'openFile' | lang: 'ui/command' }}</span>
+    </a>
+    <a ng-click="importFile()" class="btn-wrap" >
+        <span class="btn-icon glyphicon-floppy-disk"></span>
+        <span class="btn-label">{{ 'importFile' | lang: 'ui/command' }}</span>
+    </a>
+    <a ng-click="saveFile()" class="btn-wrap" >
+        <span class="btn-icon glyphicon-floppy-disk"></span>
+        <span class="btn-label">{{ 'saveFile' | lang: 'ui/command' }}</span>
+    </a>
+    <a ng-click="exportFile()" class="btn-wrap" >
+        <span class="btn-icon glyphicon-floppy-disk"></span>
+        <span class="btn-label">{{ 'exportFile' | lang: 'ui/command' }}</span>
+    </a>
 </div>

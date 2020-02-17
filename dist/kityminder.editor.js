@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * kityminder-editor - v1.0.67 - 2020-02-13
+ * kityminder-editor - v1.0.67 - 2020-02-17
  * https://github.com/fex-team/kityminder-editor
  * GitHub: https://github.com/fex-team/kityminder-editor 
  * Copyright (c) 2020 ; Licensed 
@@ -2100,7 +2100,7 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 
 
   $templateCache.put('ui/directive/fileopt/fileopt.html',
-    "<div class=\"km-btn-group file-group\"><div class=\"km-btn-item file-btn-new\" ng-disabled0=\"minder.queryCommandState('new') === -1\" ng-click0=\"minder.queryCommandState('new') === -1 || execCommand('new')\" title=\"{{ 'new' | lang:'ui/command' }}\"><i class=\"km-btn-icon\"></i> <span class=\"km-btn-caption\">{{ 'filebtnnew' | lang:'ui/command' }}</span></div><div class=\"km-btn-item file-btn-save\" ng-disabled0=\"minder.queryCommandState('save') === -1\" ng-click0=\"minder.queryCommandState('save') === -1 || execCommand('save')\" title=\"{{ 'save' | lang:'ui/command' }}\"><i class=\"km-btn-icon\"></i> <span class=\"km-btn-caption\">{{ 'save' | lang:'ui/command' }}</span></div></div>"
+    "<div class=\"readjust-layout\"><a ng-click=\"newFile()\" class=\"btn-wrap\"><span class=\"btn-icon glyphicon-floppy-disk\"></span> <span class=\"btn-label\">{{ 'newFile' | lang: 'ui/command' }}</span></a> <a ng-click=\"openFile()\" class=\"btn-wrap\"><span class=\"btn-icon glyphicon-floppy-disk\"></span> <span class=\"btn-label\">{{ 'openFile' | lang: 'ui/command' }}</span></a> <a ng-click=\"importFile()\" class=\"btn-wrap\"><span class=\"btn-icon glyphicon-floppy-disk\"></span> <span class=\"btn-label\">{{ 'importFile' | lang: 'ui/command' }}</span></a> <a ng-click=\"saveFile()\" class=\"btn-wrap\"><span class=\"btn-icon glyphicon-floppy-disk\"></span> <span class=\"btn-label\">{{ 'saveFile' | lang: 'ui/command' }}</span></a> <a ng-click=\"exportFile()\" class=\"btn-wrap\"><span class=\"btn-icon glyphicon-floppy-disk\"></span> <span class=\"btn-label\">{{ 'exportFile' | lang: 'ui/command' }}</span></a></div>"
   );
 
 
@@ -2215,7 +2215,7 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 
 
   $templateCache.put('ui/directive/topTab/topTab.html',
-    "<tabset><tab heading=\"{{ 'file' | lang: 'ui/tabs'; }}\" ng-click=\"toggleTopTab('file')\" select=\"setCurTab('file')\"><file-btn-new minder=\"minder\"></file-btn-new></tab><tab heading=\"{{ 'idea' | lang: 'ui/tabs'; }}\" ng-click=\"toggleTopTab('idea')\" select=\"setCurTab('idea')\"><undo-redo editor=\"editor\"></undo-redo><append-node minder=\"minder\"></append-node><arrange minder=\"minder\"></arrange><operation minder=\"minder\"></operation><hyper-link minder=\"minder\"></hyper-link><image-btn minder=\"minder\"></image-btn><note-btn minder=\"minder\"></note-btn><priority-editor minder=\"minder\"></priority-editor><progress-editor minder=\"minder\"></progress-editor><resource-editor minder=\"minder\"></resource-editor></tab><tab heading=\"{{ 'appearence' | lang: 'ui/tabs'; }}\" ng-click=\"toggleTopTab('appearance')\" select=\"setCurTab('appearance')\"><template-list minder=\"minder\" class=\"inline-directive\"></template-list><theme-list minder=\"minder\"></theme-list><layout minder=\"minder\" class=\"inline-directive\"></layout><style-operator minder=\"minder\" class=\"inline-directive\"></style-operator><font-operator minder=\"minder\" class=\"inline-directive\"></font-operator></tab><tab heading=\"{{ 'view' | lang: 'ui/tabs'; }}\" ng-click=\"toggleTopTab('view')\" select=\"setCurTab('view')\"><expand-level minder=\"minder\"></expand-level><select-all minder=\"minder\"></select-all><search-btn minder=\"minder\"></search-btn></tab></tabset>"
+    "<tabset><tab heading=\"{{ 'file' | lang: 'ui/tabs'; }}\" ng-click=\"toggleTopTab('file')\" select=\"setCurTab('file')\"><fileopt minder=\"minder\"></fileopt></tab><tab heading=\"{{ 'idea' | lang: 'ui/tabs'; }}\" ng-click=\"toggleTopTab('idea')\" select=\"setCurTab('idea')\"><undo-redo editor=\"editor\"></undo-redo><append-node minder=\"minder\"></append-node><arrange minder=\"minder\"></arrange><operation minder=\"minder\"></operation><hyper-link minder=\"minder\"></hyper-link><image-btn minder=\"minder\"></image-btn><note-btn minder=\"minder\"></note-btn><priority-editor minder=\"minder\"></priority-editor><progress-editor minder=\"minder\"></progress-editor><resource-editor minder=\"minder\"></resource-editor></tab><tab heading=\"{{ 'appearence' | lang: 'ui/tabs'; }}\" ng-click=\"toggleTopTab('appearance')\" select=\"setCurTab('appearance')\"><template-list minder=\"minder\" class=\"inline-directive\"></template-list><theme-list minder=\"minder\"></theme-list><layout minder=\"minder\" class=\"inline-directive\"></layout><style-operator minder=\"minder\" class=\"inline-directive\"></style-operator><font-operator minder=\"minder\" class=\"inline-directive\"></font-operator></tab><tab heading=\"{{ 'view' | lang: 'ui/tabs'; }}\" ng-click=\"toggleTopTab('view')\" select=\"setCurTab('view')\"><expand-level minder=\"minder\"></expand-level><select-all minder=\"minder\"></select-all><search-btn minder=\"minder\"></search-btn></tab></tabset>"
   );
 
 
@@ -2237,6 +2237,16 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 
   $templateCache.put('ui/dialog/image/image.tpl.html',
     "<div class=\"modal-header\"><h3 class=\"modal-title\">图片</h3></div><div class=\"modal-body\"><tabset><tab heading=\"图片搜索\"><form class=\"form-inline\"><div class=\"form-group\"><label for=\"search-keyword\">关键词：</label><input type=\"text\" class=\"form-control\" ng-model=\"data.searchKeyword2\" id=\"search-keyword\" placeholder=\"请输入搜索的关键词\"></div><button class=\"btn btn-primary\" ng-click=\"searchImage()\">百度一下</button></form><div class=\"search-result\" id=\"search-result\"><ul><li ng-repeat=\"image in list\" id=\"{{ 'img-item' + $index }}\" ng-class=\"{'selected' : isSelected}\" ng-click=\"selectImage($event)\"><img id=\"{{ 'img-' + $index }}\" ng-src=\"{{ image.src || '' }}\" alt=\"{{ image.title }}\" onerror=\"this.parentNode.removeChild(this)\"> <span>{{ image.title }}</span></li></ul></div></tab><tab heading=\"外链图片\"><form><div class=\"form-group\" ng-class=\"{true: 'has-success', false: 'has-error'}[urlPassed]\"><label for=\"image-url\">链接地址：</label><input type=\"text\" class=\"form-control\" ng-model=\"data.url\" ng-blur=\"urlPassed = data.R_URL.test(data.url)\" ng-focus=\"this.value = data.url\" ng-keydown=\"shortCut($event)\" id=\"image-url\" placeholder=\"必填：以 http(s):// 开头\"></div><div class=\"form-group\" ng-class=\"{'has-success' : titlePassed}\"><label for=\"image-title\">提示文本：</label><input type=\"text\" class=\"form-control\" ng-model=\"data.title\" ng-blur=\"titlePassed = true\" id=\"image-title\" placeholder=\"选填：鼠标在图片上悬停时提示的文本\"></div><div class=\"form-group\"><label for=\"image-preview\">图片预览：</label><img class=\"image-preview\" id=\"image-preview\" ng-src=\"{{ data.url }}\" alt=\"{{ data.title }}\"></div></form></tab><tab heading=\"上传图片\" active=\"true\"><form><div class=\"form-group\"><input type=\"file\" name=\"upload-image\" id=\"upload-image\" class=\"upload-image\" accept=\".jpg,.JPG,jpeg,JPEG,.png,.PNG,.gif,.GIF\" onchange=\"angular.element(this).scope().uploadImage()\"><label for=\"upload-image\" class=\"btn btn-primary\"><span>选择文件&hellip;</span></label></div><div class=\"form-group\" ng-class=\"{'has-success' : titlePassed}\"><label for=\"image-title\">提示文本：</label><input type=\"text\" class=\"form-control\" ng-model=\"data.title\" ng-blur=\"titlePassed = true\" id=\"image-title\" placeholder=\"选填：鼠标在图片上悬停时提示的文本\"></div><div class=\"form-group\"><label for=\"image-preview\">图片预览：</label><img class=\"image-preview\" id=\"image-preview\" ng-src=\"{{ data.url }}\" title=\"{{ data.title }}\" alt=\"{{ data.title }}\"></div></form></tab></tabset></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" ng-click=\"ok()\">确定</button> <button class=\"btn btn-warning\" ng-click=\"cancel()\">取消</button></div>"
+  );
+
+
+  $templateCache.put('ui/dialog/openfile/openfile.tpl.html',
+    "<div class=\"modal-header\"><h3 class=\"modal-title\">文件</h3></div><div class=\"modal-body\"><tabset><tab heading=\"打开文件\" active=\"true\"><form><div class=\"form-group\"><input type=\"file\" name=\"upload-image\" id=\"upload-image\" class=\"upload-image\" accept=\".km,.KM,km,KM,.png,.PNG,.gif,.GIF\" onchange=\"angular.element(this).scope().uploadImage(this)\"><label for=\"upload-image\" class=\"btn btn-primary\"><span>选择文件&hellip;</span></label></div></form></tab></tabset></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" ng-click=\"ok()\">打开</button> <button class=\"btn btn-warning\" ng-click=\"cancel()\">取消</button></div>"
+  );
+
+
+  $templateCache.put('ui/dialog/savefile/savefile.tpl.html',
+    "<div class=\"modal-header\"><h3 class=\"modal-title\">文件</h3></div><div class=\"modal-body\"><tabset><tab heading=\"另存为\" active=\"false\"></tab><tab heading=\"导出文件\" active=\"true\"><form><div class=\"form-group\" ng-class=\"{true: 'has-success', false: 'has-error'}[filenamePassed]\"><label for=\"filename-id\">导出文件名称</label><div class=\"input-group\"><input type=\"text\" id=\"filename-id\" ng-blur=\"onFilenameBlur()\" class=\"form-control\" placeholder=\"文件名\" ng-model=\"fileName\"><div class=\"input-group-btn\"><button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\">.{{filetype}} <span class=\"caret\"></span></button><ul class=\"dropdown-menu\"><li><a href=\"#\" ng-click=\"onSelectFileType('km')\">格力脑图格式 (*.km)</a></li><li><a href=\"#\" ng-click=\"onSelectFileType('md')\">Markdown 格式 (*.md)</a></li><li><a href=\"#\" ng-click=\"onSelectFileType('json')\">JSON 格式 (*.json)</a></li></ul></div></div></div></form></tab></tabset></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" ng-click=\"ok()\">确定</button> <button class=\"btn btn-warning\" ng-click=\"cancel()\">取消</button></div>"
   );
 
 }]);
@@ -2481,8 +2491,12 @@ angular.module('kityminderEditor')
 					'move_success': '{0} 移动成功到 {1}',
 
 					'command': {
-						'new':'新建',
-						'save':'保存',
+						'newFile':'新建',
+						"openFile":'打开',
+						'importFile':'导入',
+						'saveFile':'保存',
+						"saveAsFile":'另存为',
+						'exportFile':'导出',
 						'appendsiblingnode': '插入同级主题',
                         'appendparentnode': '插入上级主题',
 						'appendchildnode': '插入下级主题',
@@ -3279,6 +3293,181 @@ angular.module('kityminderEditor')
         }
     }]);
 angular.module('kityminderEditor')
+    .controller('openfile.ctrl', ['$http', '$scope', '$modalInstance', 'image', 'server', function($http, $scope, $modalInstance, image, server) {
+
+        $scope.data = {
+            list: [],
+            url: image.url || '',
+            title: image.title || '',
+            R_URL: /^https?\:\/\/\w+/
+        };
+
+        // setTimeout(function() {
+        //     var $imageUrl = $('#image-url');
+        //     $imageUrl.focus();
+        //     $imageUrl[0].setSelectionRange(0, $scope.data.url.length);
+        // }, 300); 
+ 
+ 
+
+        //https://www.jianshu.com/p/9b53499d9031
+        // 自动上传图片，后端需要直接返回图片 URL
+        $scope.uploadImage = function(ele) {
+            var fileInput = $('#upload-image');
+            if (!fileInput.val()) {
+                return;
+            }
+            var files = ele.files; 
+
+            var file = files[0]
+           // var file = fileInput.val().toLocaleLowerCase()
+            
+            // textType = /(md|km)/,
+            var fileType = file.name.substr(file.name.lastIndexOf('.')+1); 
+            alert(file.name)
+            switch(fileType){
+                case 'md':
+                    fileType = 'markdown';
+                    break;
+                case 'km':
+                case 'json':
+                    fileType = 'json';
+                    break;
+                default:
+                    console.log("File not supported!");
+                    alert('只支持.km、.md、.json文件');
+                    return;
+            }
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var content = reader.result;
+                alert(content)
+                editor.minder.importData(fileType, content).then(function(data){
+                    $(fileInput).val('');
+                });
+            }
+            reader.readAsText(file);
+
+
+            // if (/^.*\.(km|txt|json|jpg|jpeg|gif|png)$/.test(fileInput.val().toLocaleLowerCase())) {
+            //     var file = fileInput[0].files[0];
+            //     return server.uploadImage(file).then(function (json) {
+            //         var resp = json.data;
+            //         if (resp.errno === 0) {
+            //             $scope.data.url = resp.data.url;
+            //         }
+            //     });
+            // } else {
+            //     alert("后缀只能是 jpg、gif 及 png");
+            // }
+        };
+
+        $scope.shortCut = function(e) {
+            e.stopPropagation();
+
+            if (e.keyCode == 13) {
+                $scope.ok();
+            } else if (e.keyCode == 27) {
+                $scope.cancel();
+            }
+        };
+
+        $scope.ok = function () {
+            if($scope.data.R_URL.test($scope.data.url)) {
+                $modalInstance.close({
+                    url: $scope.data.url,
+                    title: $scope.data.title
+                });
+            } else {
+                $scope.urlPassed = false;
+
+                var $imageUrl = $('#image-url');
+                if ($imageUrl) {
+                    $imageUrl.focus();
+                    $imageUrl[0].setSelectionRange(0, $scope.data.url.length);
+                }
+
+            }
+
+            editor.receiver.selectAll();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+            editor.receiver.selectAll();
+        };
+ 
+}]);
+angular.module('kityminderEditor')
+    .controller('savefile.ctrl', ['$http', '$scope', '$modalInstance', 'data', 'server', function($http, $scope, $modalInstance, data, server) {
+        
+        var filereg = '[\\\\/:*?\"<>|]';
+        $scope.R_FILENAME = new RegExp(filereg, 'i');
+
+        $scope.filetype  =data.filetype || 'km';
+        $scope.fileName  =data.fileName || 'unamed';
+      // $scope.filetype  =  'km';
+       //$scope.fileName  = 'unamed';
+ 
+        // setTimeout(function() {
+        //     var $imageUrl = $('#image-url');
+        //     $imageUrl.focus();
+        //     $imageUrl[0].setSelectionRange(0, $scope.data.url.length);
+        // }, 300); 
+ 
+   
+        $scope.onSelectFileType = function(ft) { 
+            $scope.filetype = ft   
+            console.log(ft)
+            console.log($scope)
+        };
+
+        $scope.shortCut = function(e) {
+            e.stopPropagation();
+
+            if (e.keyCode == 13) {
+                $scope.ok();
+            } else if (e.keyCode == 27) {
+                $scope.cancel();
+            }
+        };
+
+        $scope.onFilenameBlur=function(){
+            $scope.filenamePassed =  ! $scope.R_FILENAME.test($scope.fileName) 
+        };
+        $scope.ok = function () {
+            // if($scope.data.R_URL.test($scope.data.url)) {
+            //     $modalInstance.close({
+            //         url: $scope.data.url,
+            //         title: $scope.data.title
+            //     });
+            // } else {
+            //     $scope.urlPassed = false; 
+            //     var $imageUrl = $('#image-url');
+            //     if ($imageUrl) {
+            //         $imageUrl.focus();
+            //         $imageUrl[0].setSelectionRange(0, $scope.data.url.length);
+            //     }
+            // }
+            //editor.receiver.selectAll();
+            if(!$scope.R_FILENAME.test($scope.fileName)) {
+                $scope.filenamePassed = false;
+                $modalInstance.close({
+                    filetype: $scope.filetype, 
+                    fileName: $scope.fileName, 
+                });
+            } else {
+                $scope.filenamePassed = false; 
+            }
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+            editor.receiver.selectAll();
+        };
+ 
+}]);
+angular.module('kityminderEditor')
     .directive('appendNode', ['commandBinder', function(commandBinder) {
         return {
             restrict: 'E',
@@ -3373,23 +3562,132 @@ angular.module('kityminderEditor')
             }
         }
     });
-angular.module('kityminderEditor')
-    .directive('fileopt', ['commandBinder', function(commandBinder) {
+angular.module('kityminderEditor') 
+    .directive('fileopt', ['$modal', function($modal) {
         return {
             restrict: 'E',
             templateUrl: 'ui/directive/fileopt/fileopt.html',
             scope: {
                 minder: '='
             },
-            replace: true,
+            replace: true, 
             link: function($scope) {
                 var minder = $scope.minder;
 
+                $scope.saveModalData = {
+                    filetype : "km",
+                    fileName : "unamed",
+                }
+
                 //commandBinder.bind(minder, 'new', $scope)
-                    alert('new')
+                $scope.newFile = newFile;
+                $scope.openFile = openFile;
+                $scope.importFile = importFile;
+                $scope.saveFile = saveFile;
+                $scope.saveAsFile = saveAsFile;
+                $scope.exportFile = exportFile;
+ 
+                function newFile(){
+                    alert("d")
+                }
+
+                function openFile() { 
+
+                }
+
+                function importFile() { 
+                    // var link = minder.queryCommandValue('HyperLink');
+                    var link="testlink"
+ 
+                     var openfilemodal = $modal.open({
+                         animation: true,
+                         templateUrl: 'ui/dialog/openfile/openfile.tpl.html',
+                         controller: 'openfile.ctrl',
+                         size: 'md',
+                         resolve: {
+                             image: function() {
+                                 return link;
+                             }
+                         }
+                     });
+ 
+                     openfilemodal.result.then(function(result) {
+                        // minder.execCommand('HyperLink', result.url, result.title || '');
+                        console.log("openfilemodal res=",result.url) 
+                     });
+ 
+                }
+
+                function saveFile(){
+                    alert("save") 
+                }
+                function saveAsFile() {
+                }
+
+                function exportFile() {
+                    var savefilemodal = $modal.open({
+                        animation: true,
+                        templateUrl: 'ui/dialog/savefile/savefile.tpl.html',
+                        controller: 'savefile.ctrl',
+                        size: 'md',
+                        resolve: {
+                            data: function() {
+                                return $scope.saveModalData
+                            }
+                        }
+                    });
+
+                    savefilemodal.result.then(function(result) { 
+                            var exportType = result.filetype || "json";
+                            console.log(exportType, result);
+                            minder.exportData(exportType).then(function(content){ 
+                                switch(exportType){
+                                    case 'json':
+                                        console.log("content json:");
+                                        console.log(content);
+                                        console.log($.parseJSON(content));
+                                        break;
+                                    default:
+                                        console.log("content default:");
+                                        console.log(content);
+                                        break;
+                                }
+
+        
+                                // blobOptions = {
+                                //     type: 'text/csv',
+                                //     endings: 'native' // or transparent
+                                // };
+                                var blobOptions =  {};
+                        
+                                var blob = new Blob([content], blobOptions);
+                                var a = document.createElement('a');
+                                a.innerHTML = result.fileName + "."+  result.filetype;
+                        
+                                // 指定生成的文件名
+                                a.download = result.fileName + "."+  result.filetype;
+                                a.href = URL.createObjectURL(blob);
+                        
+                                document.body.appendChild(a);
+                        
+                                var evt = document.createEvent("MouseEvents");
+                                evt.initEvent("click", false, false);
+                        
+                                a.dispatchEvent(evt);
+                        
+                                document.body.removeChild(a); 
+                            
+                            console.log("savefilemodal res=",result.filetype) 
+                        });
+                    });
+                }
             }
         }
     }]);
+
+
+
+ 
 angular.module('kityminderEditor')
 	.directive('fontOperator', function() {
 		return {

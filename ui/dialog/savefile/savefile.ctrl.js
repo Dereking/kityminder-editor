@@ -1,32 +1,25 @@
 angular.module('kityminderEditor')
-    .controller('openfile.ctrl', ['$http', '$scope', '$modalInstance', 'data', 'server', function($http, $scope, $modalInstance, data, server) {
+    .controller('savefile.ctrl', ['$http', '$scope', '$modalInstance', 'data', 'server', function($http, $scope, $modalInstance, data, server) {
+        
+        var filereg = '[\\\\/:*?\"<>|]';
+        $scope.R_FILENAME = new RegExp(filereg, 'i');
 
-        $scope.data = { 
-            filetype: data.filetype || '',
-            title: filetype.title || '', 
-        };
-
+        $scope.filetype  =data.filetype || 'km';
+        $scope.fileName  =data.fileName || 'unamed';
+      // $scope.filetype  =  'km';
+       //$scope.fileName  = 'unamed';
+ 
         // setTimeout(function() {
         //     var $imageUrl = $('#image-url');
         //     $imageUrl.focus();
         //     $imageUrl[0].setSelectionRange(0, $scope.data.url.length);
         // }, 300); 
+ 
    
-        $scope.onSelectFileType = function(filetype) { 
-            switch(filetype){
-                case 'md':
-                    fileType = 'markdown';
-                    break;
-                case 'km':
-                case 'json':
-                    fileType = 'json';
-                    break;
-                default:
-                    console.log("File not supported!"); 
-                    return;
-            } 
-            
-            $('#filetype').val(filetype);
+        $scope.onSelectFileType = function(ft) { 
+            $scope.filetype = ft   
+            console.log(ft)
+            console.log($scope)
         };
 
         $scope.shortCut = function(e) {
@@ -39,24 +32,33 @@ angular.module('kityminderEditor')
             }
         };
 
+        $scope.onFilenameBlur=function(){
+            $scope.filenamePassed =  ! $scope.R_FILENAME.test($scope.fileName) 
+        };
         $scope.ok = function () {
-            if($scope.data.R_URL.test($scope.data.url)) {
+            // if($scope.data.R_URL.test($scope.data.url)) {
+            //     $modalInstance.close({
+            //         url: $scope.data.url,
+            //         title: $scope.data.title
+            //     });
+            // } else {
+            //     $scope.urlPassed = false; 
+            //     var $imageUrl = $('#image-url');
+            //     if ($imageUrl) {
+            //         $imageUrl.focus();
+            //         $imageUrl[0].setSelectionRange(0, $scope.data.url.length);
+            //     }
+            // }
+            //editor.receiver.selectAll();
+            if(!$scope.R_FILENAME.test($scope.fileName)) {
+                $scope.filenamePassed = false;
                 $modalInstance.close({
-                    url: $scope.data.url,
-                    title: $scope.data.title
+                    filetype: $scope.filetype, 
+                    fileName: $scope.fileName, 
                 });
             } else {
-                $scope.urlPassed = false;
-
-                var $imageUrl = $('#image-url');
-                if ($imageUrl) {
-                    $imageUrl.focus();
-                    $imageUrl[0].setSelectionRange(0, $scope.data.url.length);
-                }
-
+                $scope.filenamePassed = false; 
             }
-
-            editor.receiver.selectAll();
         };
 
         $scope.cancel = function () {

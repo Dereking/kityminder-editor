@@ -1,44 +1,41 @@
 <div class="modal-header">
     <h3 class="modal-title">文件</h3>
 </div>
-<div class="modal-body">
+<div class="modal-body" >
     <tabset> 
+        <tab heading="另存为" active="false">
+
+        </tab>
+
         <tab heading="导出文件" active="true">
             <form>
-                <div class="form-group">
-
-                    <div class="input-group">
-                        <input type="text" aria-label="..."
-                            class="form-control"
-                            ng-model="filetype" 
-                            ng-focus="this.value = filetype"
-                            ng-keydown="shortCut($event)"
-                            id="filetype"
-                            placeholder="" aria-readonly="true"/> 
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-default dropdown-toggle"  
-                              id="filetypeBtn"
-                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ filetype }}
-                            <span class="caret"></span></button>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="#" (click)="onSelectFileType('km')">KM</a></li>
-                                <li><a href="#" (click)="onSelectFileType('md')">Markdown</a></li>
-                                <li><a href="#" (click)="onSelectFileType('json')">JSON</a></li>  
-                            </ul>
+                <div class="form-group" ng-class="{true: 'has-success', false: 'has-error'}[filenamePassed]">  
+                    <label for="filename-id">导出文件名称</label> 
+                    <div class="input-group">   
+                        <input type="text" id="filename-id"
+                            ng-blur="onFilenameBlur()"
+                            class="form-control" placeholder="文件名" ng-model="fileName"  
+                          />  
+                        <div class="input-group-btn" >
+                        <!--div class="btn-group"-->
+                            <button type="button" class="btn btn-default dropdown-toggle"  data-toggle="dropdown"> 
+                                .{{filetype}}
+                                <span class="caret"></span>
+                            </button> 
+                            <ul class="dropdown-menu">
+                                <li><a href="#" ng-click="onSelectFileType('km')">格力脑图格式 (*.km)</a></li>
+                                <li><a href="#" ng-click="onSelectFileType('md')">Markdown 格式 (*.md)</a></li>
+                                <li><a href="#" ng-click="onSelectFileType('json')">JSON 格式 (*.json)</a></li>  
+                            </ul> 
                         </div><!-- /btn-group -->
-                    </div><!-- /input-group -->
-
-                    <!-- 这里不能用 ng-change -->
-                    <input type="file" name="upload-image" id="upload-image" class="upload-image" accept=".km,.KM,km,KM,.png,.PNG,.gif,.GIF" onchange="angular.element(this).scope().uploadImage(this)"/>
-                    <label for="upload-image" class="btn btn-primary"><span>&hellip;</span></label>
+                    </div><!-- /input-group -->  
                 </div> 
-                <a id="downloadbtn" href="">下载</a>
             </form>
         </tab>
     </tabset>
 
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">打开</button>
+    <button class="btn btn-primary" ng-click="ok()">确定</button>
     <button class="btn btn-warning" ng-click="cancel()">取消</button>
 </div>

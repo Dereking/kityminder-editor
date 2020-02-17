@@ -158,10 +158,12 @@ angular.module('kityminderEditor')
 					'move_success': '{0} 移动成功到 {1}',
 
 					'command': {
-						'new':'新建',
-						'save':'保存',
-						"import":'导入',
-						"export":'导出',
+						'newFile':'新建',
+						"openFile":'打开',
+						'importFile':'导入',
+						'saveFile':'保存',
+						"saveAsFile":'另存为',
+						'exportFile':'导出',
 						'appendsiblingnode': '插入同级主题',
                         'appendparentnode': '插入上级主题',
 						'appendchildnode': '插入下级主题',
